@@ -1,0 +1,19 @@
+input[type=text] {
+    width: 14em;
+}
+
+body{
+   background: #fff;
+   color: #333;
+   margin: 0;
+   padding: 0;
+   height: 100%;
+}
+
+.detail {
+    display: none;
+}
+
+._jsPlumb_connector.selected {
+    border: 2px solid #99F;
+}

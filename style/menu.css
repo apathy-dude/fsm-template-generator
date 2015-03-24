@@ -1,0 +1,38 @@
+.menu {
+    padding: 16px;
+    position: absolute;
+    z-index: 4;
+    border: 1px solid #2E6F9A;
+    box-shadow: 2px 2px #E0E0E0;
+    border-radius: 8px;
+    opacity: 0.8;
+    cursor: move;
+    background-color: #FFF;
+    font-size: 11px;
+    transition: background-color 0.25s ease-in 0s;
+    text-align: center;
+    min-width: 96px;
+    min-height: 32px;
+}
+
+.menu.selected, .menu:hover {
+    background-color: #5C96BC;
+    color: #FFF;
+}
+
+.point {
+    position: absolute;
+    bottom: 37%;
+    right: 5px;
+    width: 1em;
+    height: 1em;
+    background-color: #FFA500;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px #000;
+    transition: box-shadow 0.25s ease-in 0s;
+}
+
+.point:hover {
+    box-shadow: 0px 0px 6px #000;
+}
+

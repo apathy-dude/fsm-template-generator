@@ -1,0 +1,21 @@
+{
+  "name": "fsm-template-generator",
+  "version": "0.0.0",
+  "description": "Tool for creating Finite State Machine templates. Currently only supports machina.js",
+  "main": "main.js",
+  "scripts": {
+    "start": "beefy main.js:bin/fsm-template-generator.js --live --debug=false",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Brown",
+  "license": "Unlicence",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.4.0",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.1.0"
+  }
+}
