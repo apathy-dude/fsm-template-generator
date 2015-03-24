@@ -6,6 +6,13 @@ var fsm = {
     states: {}
 };
 
+var generationVisible = false;
+
+function generate() {
+    if(generationVisible)
+        document.getElementById('output').value = genOutput(fsm);
+}
+
 function* idGenerator(prefix) {
     var index = 0;
     while(++index)
@@ -35,7 +42,7 @@ function removeSelectedDetail() {
     for(d in detailDOM.children) {
         var dom = detailDOM.children[d];
         if(dom.style)
-            dom.style.display = 'none';
+            dom.classList.remove('visible');
     }
 }
 
@@ -45,6 +52,7 @@ document.body.onresize = function(e) {
 
 document.getElementById('namespace').onchange = function(e) {
     fsm.name = e.target.value;
+    generate();
 };
 
 document.getElementById('add-state').onclick = function(e) {
@@ -95,7 +103,7 @@ document.getElementById('add-state').onclick = function(e) {
 
         details.state = menu;
         menu.classList.add('selected');
-        stateDetailDOM.style.display = 'block';
+        stateDetailDOM.classList.add('visible');
 
         var stateName = document.getElementById('state-name');
         var stateClose = document.getElementById('state-close');
@@ -105,7 +113,7 @@ document.getElementById('add-state').onclick = function(e) {
 
         function closeStateDetail() {
             details[state] = null;
-            stateDetailDOM.style.display = 'none';
+            stateDetailDOM.classList.remove('visible');
             stateClose.onclick = undefined;
             stateDelete.onclick = undefined;
         }
@@ -113,6 +121,7 @@ document.getElementById('add-state').onclick = function(e) {
         stateName.onchange = function(e) {
             fsm.states[id].name = stateName.value;
             menu.children[0].textContent = stateName.value;
+            generate();
         };
         stateClose.onclick = function(e) {
             menu.classList.remove('selected');
@@ -123,17 +132,25 @@ document.getElementById('add-state').onclick = function(e) {
             plumb.remove(menu);
             delete fsm.states[id];
             closeStateDetail();
+            generate();
         };
     }
 
     menu.onmousedown = select;
 
     select();
+    generate();
 };
 
 document.getElementById('output-gen').onclick = function(e) {
-    console.log(genOutput);
-    document.getElementById('output').value = genOutput(fsm);
+    document.getElementById('output-display').classList.add('visible');
+    generate();
+    generationVisible = true;
+};
+
+document.getElementById('output-hide').onclick = function(e) {
+    document.getElementById('output-display').classList.remove('visible');
+    generationVisible = false;
 };
 
 plumb.bind('ready', function jsPlumbBind() {
@@ -145,7 +162,7 @@ plumb.bind('ready', function jsPlumbBind() {
 
     function closeTransitionDetail() {
         details.connection = null;
-        transitionDetailDOM.style.display = 'none';
+        transitionDetailDOM.classList.remove('visible');
         transitionClose.onclick = undefined;
         transitionDelete.onclick = undefined;
     }
@@ -155,13 +172,14 @@ plumb.bind('ready', function jsPlumbBind() {
         var detail = conn.canvas;
         details.connection = detail;
         detail.classList.add('selected');
-        transitionDetailDOM.style.display = 'block';
+        transitionDetailDOM.classList.add('visible');
         transitionName.value = conn.getOverlay('label').getLabel();
 
         transitionName.onchange = function(e) {
             var name = transitionName.value;
             fsm.states[conn.sourceId].transitions[conn.id].name = name;
             conn.getOverlay('label').setLabel(name);
+            generate();
         };
         transitionClose.onclick = function(e) {
             detail.classList.remove('selected');
@@ -182,10 +200,12 @@ plumb.bind('ready', function jsPlumbBind() {
         fsm.states[conn.sourceId].transitions[conn.connection.id] = { target: conn.targetId, name: 'transition' };
         conn.connection.getOverlay('label').setLabel("transition");
         select(conn.connection);
+        generate();
     });
 
     plumb.bind('beforeDetach', function(conn) {
         delete fsm.states[conn.sourceId].transitions[conn.id];
+        genOutput(fsm);
     });
 });
 

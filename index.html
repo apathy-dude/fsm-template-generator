@@ -17,9 +17,12 @@
                 <span>State Machine Name: </span>
                 <input type="text" id="namespace" />
             </div>
-            <input type="button" id="add-state" value="Add State" />
-            <input type="button" id="output-gen" value="Generate" />
-            <textarea id="output"></textarea>
+
+            <div class="right">
+                <input type="button" id="add-state" value="Add State" />
+                <input type="button" id="output-gen" value="Generate" />
+            </div>
+
             <div id="details">
                 <div id="state-details" class="detail">
                     <h2>State Details:</h2>
@@ -27,7 +30,7 @@
                         <span>Name:</span>
                         <input type="text" id="state-name" />
                     </div>
-                    <div>
+                    <div class="right">
                         <input type="button" id="state-close" value="Close" />
                         <input type="button" id="state-delete" value="Delete" />
                     </div>
@@ -38,12 +41,21 @@
                         <span>Name:</span>
                         <input type="text" id="transition-name" />
                     </div>
-                    <div>
+                    <div class="right">
                         <input type="button" id="transition-close" value="Close" />
                         <input type="button" id="transition-delete" value="Delete" />
                     </div>
                 </div>
             </div>
+
+            <div id="output-display" class="detail">
+                <h2>Ouput:</h2>
+                <textarea id="output"></textarea>
+                <div class="right">
+                    <input type="button" id="output-hide" value="close" />
+                </div>
+            </div>
+
         </div>
     </div>
 
