@@ -27,6 +27,8 @@ module.exports = function(fsm) {
             out = appendTransition(out, fsm.states[trans.target].name, trans.name, indent + 1);
         }
 
+        out = out.concat(ind + "},\n");
+
         return out;
     }
 
