@@ -36,8 +36,8 @@ module.exports = function(fsm) {
         .concat("var fsm = new machina.BehavioralFsm({\n")
         .concat("\tinitialize: function(options) {\n")
         .concat("\t},\n")
-        .concat("\tnamespace: '" + fsm.name + "'\n")
-        .concat("\tinitialState: '" + fsm.initial + "'\n")
+        .concat("\tnamespace: '" + fsm.name + "',\n")
+        .concat("\tinitialState: '" + fsm.initial + "',\n")
         .concat("\tstates: {\n");
         
     for(var s in fsm.states)

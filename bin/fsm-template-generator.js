@@ -56,6 +56,11 @@ document.getElementById('namespace').onchange = function(e) {
     generate();
 };
 
+document.getElementById('initial').onchange = function(e) {
+    fsm.initial = e.target.value;
+    generate();
+};
+
 document.getElementById('add-state').onclick = function(e) {
     var id = menuIdGenerator.next().value;
     var state = { name: "", transitions: {} };
@@ -268,8 +273,8 @@ module.exports = function(fsm) {
         .concat("var fsm = new machina.BehavioralFsm({\n")
         .concat("\tinitialize: function(options) {\n")
         .concat("\t},\n")
-        .concat("\tnamespace: '" + fsm.name + "'\n")
-        .concat("\tinitialState: '" + fsm.initial + "'\n")
+        .concat("\tnamespace: '" + fsm.name + "',\n")
+        .concat("\tinitialState: '" + fsm.initial + "',\n")
         .concat("\tstates: {\n");
         
     for(var s in fsm.states)
