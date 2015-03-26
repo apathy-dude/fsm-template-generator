@@ -55,6 +55,11 @@ document.getElementById('namespace').onchange = function(e) {
     generate();
 };
 
+document.getElementById('initial').onchange = function(e) {
+    fsm.initial = e.target.value;
+    generate();
+};
+
 document.getElementById('add-state').onclick = function(e) {
     var id = menuIdGenerator.next().value;
     var state = { name: "", transitions: {} };
