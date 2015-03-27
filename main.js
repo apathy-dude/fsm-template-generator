@@ -3,10 +3,9 @@ var genOutput = require('./src/outputGenerator');
 
 var fsm = {
     name: "",
-    states: {}
+    states: {},
+    initial: {}
 };
-
-var generationVisible = false;
 
 function generate() {
     document.getElementById('output').value = genOutput(fsm);
@@ -54,14 +53,9 @@ document.getElementById('namespace').onchange = function(e) {
     generate();
 };
 
-document.getElementById('initial').onchange = function(e) {
-    fsm.initial = e.target.value;
-    generate();
-};
-
 document.getElementById('add-state').onclick = function(e) {
     var id = menuIdGenerator.next().value;
-    var state = { name: "", transitions: {} };
+    var state = { name: "", transitions: {}, id: id };
 
     var menu = document.createElement('div');
     menu.classList.add('menu');
@@ -112,6 +106,7 @@ document.getElementById('add-state').onclick = function(e) {
         var stateName = document.getElementById('state-name');
         var stateClose = document.getElementById('state-close');
         var stateDelete = document.getElementById('state-delete');
+        var initial = document.getElementById('initial-state');
 
         stateName.value = fsm.states[id].name;
 
@@ -125,6 +120,9 @@ document.getElementById('add-state').onclick = function(e) {
         stateName.onchange = function(e) {
             fsm.states[id].name = stateName.value;
             menu.children[0].textContent = stateName.value;
+            if(fsm.initial.id === state.id) {
+                initial.innerHTML = stateName.value;
+            }
             generate();
         };
         stateClose.onclick = function(e) {
@@ -132,10 +130,21 @@ document.getElementById('add-state').onclick = function(e) {
             closeStateDetail();
         };
         stateDelete.onclick = function(e) {
+            if(fsm.initial.id === state.id) {
+                initial.innerHTML = "";
+                fsm.initial = {};
+            }
+
             menu.parentNode.removeChild(menu);
             plumb.remove(menu);
             delete fsm.states[id];
             closeStateDetail();
+            generate();
+        };
+
+        document.getElementById('initial').onclick = function(e) {
+            fsm.initial = state;
+            initial.innerHTML = state.name;
             generate();
         };
     }
@@ -149,12 +158,10 @@ document.getElementById('add-state').onclick = function(e) {
 document.getElementById('output-gen').onclick = function(e) {
     document.getElementById('output-display').classList.add('visible');
     generate();
-    generationVisible = true;
 };
 
 document.getElementById('output-hide').onclick = function(e) {
     document.getElementById('output-display').classList.remove('visible');
-    generationVisible = false;
 };
 
 plumb.bind('ready', function jsPlumbBind() {
@@ -215,7 +222,6 @@ plumb.bind('ready', function jsPlumbBind() {
 
 window.onload = function() {
     document.getElementById('namespace').value = '';
-    document.getElementById('initial').value = '';
     document.getElementById('output').value = '';
 };
 

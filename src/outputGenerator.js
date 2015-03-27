@@ -32,12 +32,14 @@ module.exports = function(fsm) {
         return out;
     }
 
+    var initial = fsm.initial.name || '';
+
     var out = ""
         .concat("var fsm = new machina.BehavioralFsm({\n")
         .concat("\tinitialize: function(options) {\n")
         .concat("\t},\n")
         .concat("\tnamespace: '" + fsm.name + "',\n")
-        .concat("\tinitialState: '" + fsm.initial + "',\n")
+        .concat("\tinitialState: '" + initial + "',\n")
         .concat("\tstates: {\n");
         
     for(var s in fsm.states)
