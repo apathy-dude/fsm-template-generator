@@ -10,8 +10,7 @@ var fsm = {
 var generationVisible = false;
 
 function generate() {
-    if(generationVisible)
-        document.getElementById('output').value = genOutput(fsm);
+    document.getElementById('output').value = genOutput(fsm);
 }
 
 function* idGenerator(prefix) {
@@ -214,6 +213,12 @@ plumb.bind('ready', function jsPlumbBind() {
         genOutput(fsm);
     });
 });
+
+window.onload = function() {
+    document.getElementById('namespace').value = '';
+    document.getElementById('initial').value = '';
+    document.getElementById('output').value = '';
+};
 
 
 },{"./src/jsPlumbInstance":2,"./src/outputGenerator":3}],2:[function(require,module,exports){
